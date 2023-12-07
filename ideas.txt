@@ -1,0 +1,17 @@
+
+-terminar carrito (nachoke)
+-generar un archivo pdf que sea boleta(nicolas)
+
+
+-en el registro agregar los nuevos datos como el telefono o correo //(que sea opcional)
+-que las tallas se sumen y eso po.
+
+-en el editar que se vea una imagen
+-en el editar que no sea requisito nueva imagen
+
+
+
+
+- que se mande un correo
+
+-hacer una tabla aparte de imagenes y un carrusel si es que se puee
