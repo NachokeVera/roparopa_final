@@ -26,8 +26,7 @@
                         <p class="card-text">{{ $vestimenta->descripcion }}</p>
                         <p class="card-text"><strong>Precio: ${{ $vestimenta->precio }}</strong></p>
                     </div>
-                    <a href="{{ route('vestimentas.show, $vestimenta->id') }}"></a>
-                    <button type="submit" class="btn btn-success">Elejir Tallaje</button>
+                    <a href="{{ route('vestimentas.show',['id' => $vestimenta->id]) }}" class="btn btn-success">Elejir Tallaje</a>
                 </div>
         </div>
     @endforeach

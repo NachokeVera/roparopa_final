@@ -72,8 +72,8 @@ class VestimentaController extends Controller
     {
         $vestimenta = Vestimenta::find($id);
         $tallas = Talla::all();
-
-        return view('vestimentas_show', compact('vestimenta, tallas'));
+        $detalleVestimentas = DetalleVestimenta::where('vestimenta_id',$id);
+        return view('vestimenta_show', compact('vestimenta', 'tallas','detalleVestimentas'));
     }
 
     /**
