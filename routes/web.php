@@ -7,6 +7,8 @@ use App\Http\Controllers\VestimentaController;
 use App\Http\Controllers\DetalleVestimentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\DetalleCarritoController;
+use App\Models\DetalleCarrito;
 
 // web.php
 
@@ -58,10 +60,10 @@ Route::get('/admin/vestimentas', [VestimentaController::class, 'mostrarLista'])-
 Route::get('/admin/vestimentas/{id}', [VestimentaController::class, 'mostrarEditar'])->name('admin.edit.vestimenta');
 //Route::get('/admin/talla/{id}', [VestimentaController::class, 'talla'])->name('admin.talla.vestimenta');
 
-Route::get('/detalles_vestimenta/talla/{id}',[DetalleVestimentaController::class, 'show'])->name('detalles_vestimentas.show');
-Route::put('/detalles_vestimenta/{id}',[DetalleVestimentaController::class, 'update'])->name('detalles_vestimentas.update');
+Route::get('/detalles-vestimenta/talla/{id}',[DetalleVestimentaController::class, 'show'])->name('detalles_vestimentas.show');
+Route::put('/detalles-vestimenta/{id}',[DetalleVestimentaController::class, 'update'])->name('detalles_vestimentas.update');
 
-
+Route::post('/detalle-carritos',[DetalleCarritoController::class,'store'])->name('detalle_carritos.store');
 
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');
 

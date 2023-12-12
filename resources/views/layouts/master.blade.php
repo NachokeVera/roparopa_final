@@ -73,15 +73,15 @@
               Carrito de compras
             </button>
             <ul class="dropdown-menu">
-              @if (!empty($carrito))
+              @if ($detalleCarritos != null)
                 <ul class="list-group">
-                    @foreach ($carrito as $item)
-                        <li class="list-group-item">{{ $item['detalleVestimenta']->id }}.- {{ $item['detalleVestimenta']->vestimenta->nombre }}: {{ $item['cantidad'] }}</li>
+                    @foreach ($detalleCarritos as $detalleCarrito)
+                        <li class="list-group-item">{{ $detalleCarrito->id }}.- {{ $detalleCarrito->vestimenta->nombre }}: {{ $detalleCarrito->cantidad }}</li>
                     @endforeach
                 </ul>
-              @else
+            @else
                 <li><a class="dropdown-item" href="#">No hay elementos en el carrito</a></li>
-              @endif
+            @endif
             </ul>
           </div>
           @endauth

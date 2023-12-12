@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Categoria;
 use App\Models\Talla;
 use App\Models\DetalleVestimenta;
+use App\Models\DetalleCarrito;
+use Illuminate\Support\Facades\Auth;
 use Database\Seeders\CategoriaSeeder;
 
 
@@ -24,7 +26,16 @@ class VestimentaController extends Controller
         $vestimentas = Vestimenta::all();
         $tallas = Talla::all();
         $categorias = Categoria::all();
-        return view('inicio', compact('vestimentas','tallas','categorias'));
+        $detalleCarritos = null;
+
+        if (Auth::check()) {
+        // Obtener información adicional para usuarios autenticados
+            $detalleCarritos = Auth::user()->detalleCarritos;
+            
+        }
+
+        // Pasar la información a la vista
+        return view('inicio', compact('vestimentas', 'tallas', 'categorias', 'detalleCarritos'));
     }
 
     /**
@@ -73,7 +84,15 @@ class VestimentaController extends Controller
         $vestimenta = Vestimenta::find($id);
         $tallas = Talla::all();
         $detalleVestimentas = DetalleVestimenta::where('vestimenta_id',$id);
-        return view('vestimenta_show', compact('vestimenta', 'tallas','detalleVestimentas'));
+        $detalleCarritos = null;
+
+        if (Auth::check()) {
+        // Obtener información adicional para usuarios autenticados
+            $detalleCarritos = Auth::user()->detalleCarritos;
+            
+        }
+
+        return view('vestimenta_show', compact('vestimenta', 'tallas','detalleVestimentas','detalleCarritos'));
     }
 
     /**
@@ -130,12 +149,26 @@ class VestimentaController extends Controller
 
     public function mostrarLista(){
         $vestimentas = vestimenta::all();
-        return view('admin.lista-prendas', compact('vestimentas'));
+        $detalleCarritos = null;
+
+        if (Auth::check()) {
+        // Obtener información adicional para usuarios autenticados
+            $detalleCarritos = Auth::user()->detalleCarritos;
+            
+        }
+        return view('admin.lista-prendas', compact('vestimentas','detalleCarritos'));
     }
 
     public function mostrarEditar($id){
         $vestimentas = vestimenta::find($id);
-        return view('admin.editar-vestimenta', compact('vestimentas'));
+        $detalleCarritos = null;
+
+        if (Auth::check()) {
+        // Obtener información adicional para usuarios autenticados
+            $detalleCarritos = Auth::user()->detalleCarritos;
+            
+        }
+        return view('admin.editar-vestimenta', compact('vestimentas','detalleCarritos'));
     }
     // En tu controlador
     public function mostrarPrendas(Request $request)
@@ -143,7 +176,7 @@ class VestimentaController extends Controller
         
         $vestimentas = Vestimenta::all();
         $tallas = Talla::all();
-    
+        
         // Obtener el nombre de la prenda desde la solicitud
         $nombre_prenda = $request->input('nombre_prenda');
     

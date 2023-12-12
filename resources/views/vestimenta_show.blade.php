@@ -15,8 +15,10 @@
                         <p class="card-text">{{ $vestimenta->descripcion }}</p>
                         <p class="card-text"><strong>Precio: ${{ $vestimenta->precio }}</strong></p>
 
-                        <form method="POST" action="{{ route('compra.producto', ['idProducto' => $vestimenta->id]) }}">
+                        <form method="POST" action="{{ route('detalle_carritos.store') }}">
                             @csrf
+                            <input type="hidden" name="idVestimenta" value="{{ $vestimenta->id }}">
+                            <input type="text">
                             <div class="form-group">
                                 <label for="talla">Talla:</label>
                                 <select class="form-select" aria-label="Default select example" name="talla">

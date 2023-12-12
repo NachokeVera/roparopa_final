@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('confirmados', function (Blueprint $table) {
+        Schema::create('carritos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('carrito_id');
+            $table->unsignedBigInteger('detalle_carrito_id');
             $table->unsignedBigInteger('boleta_id');
             //atributos
             $table->mediumInteger('cantidad_compras');
             //foreing key
-            $table->foreign('carrito_id')->references('id')->on('carritos');
+            $table->foreign('detalle_carrito_id')->references('id')->on('detalle_carritos');
             $table->foreign('boleta_id')->references('id')->on('boletas');
             $table->timestamps();
         });

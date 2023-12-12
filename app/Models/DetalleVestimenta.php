@@ -23,9 +23,9 @@ class DetalleVestimenta extends Model
     }
     
 
-    public function detalleCompras(): HasMany
+    public function detalleCarritos(): HasMany
     {
-        return $this->hasMany(DetalleCompra::class);
+        return $this->hasMany(DetalleCarrito::class);
     }
 
 

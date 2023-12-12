@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Boleta extends Model
 {
     use HasFactory;
-    public function confirmados(): HasMany
+    public function carritos(): HasMany
     {
-        return $this->hasMany(Confirmado::class);
+        return $this->hasMany(Carrito::class);
     }
     //conexion FK
     
