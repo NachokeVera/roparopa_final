@@ -30,7 +30,7 @@
                 <td>{{ $vestimenta->precio }}</td>
                 <td>{{ $vestimenta->categoria->nombre }}</td>
                 <td>
-                    <a href="{{ route('detalles_vestimentas.show', ['id' => $vestimenta->id]) }}" class="btn btn-sm btn-success">Talla</a>
+                    <a href="{{ route('detalles_vestimentas.edit', ['id' => $vestimenta->id]) }}" class="btn btn-sm btn-success">Talla</a>
                     <div class="my-1"></div>
                     <a href="{{ route('admin.edit.vestimenta', ['id' => $vestimenta->id]) }}" class="btn btn-sm btn-warning">Editar</a>
                     <div class="my-1"></div>

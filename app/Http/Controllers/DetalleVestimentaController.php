@@ -9,6 +9,7 @@ use App\Models\DetalleVestimenta;
 use App\Models\Talla;
 use App\Models\Vestimenta;
 use Database\Seeders\CategoriaSeeder;
+use Illuminate\Support\Facades\Auth;
 
 class DetalleVestimentaController extends Controller
 {
@@ -114,11 +115,19 @@ class DetalleVestimentaController extends Controller
     public function index(){
         
     }
-    public function show(string $id){
+    public function edit(string $id){
         $vestimenta = Vestimenta::find($id);
         $tallas = Talla::all();
         $detallesVestimentas = DetalleVestimenta::where('vestimenta_id', '=', $id)->get();
-        return view('admin.detalle_vestimenta.det_vest_crear', compact('vestimenta','tallas','detallesVestimentas'));
+        $detalleCarritos = null;
+
+        if (Auth::check()) {
+        // Obtener información adicional para usuarios autenticados
+            $detalleCarritos = Auth::user()->detalleCarritos;
+            
+        }
+
+        return view('admin.detalle_vestimenta.det_vest_crear', compact('vestimenta','tallas','detallesVestimentas','detalleCarritos'));
     }
     public function update(Request $request,string $id){
         $detalleVestimenta = DetalleVestimenta::where('vestimenta_id', $id)->where('talla_id', $request->talla)->first();
@@ -137,5 +146,19 @@ class DetalleVestimentaController extends Controller
     }
     public function create(){
 
+    }
+    public function show(string $id)
+    {
+        $tallas = Talla::all();
+        $detalleVestimentas = DetalleVestimenta::where('vestimenta_id',$id)->get();
+        $detalleCarritos = null;
+
+        if (Auth::check()) {
+        // Obtener información adicional para usuarios autenticados
+            $detalleCarritos = Auth::user()->detalleCarritos;
+            
+        }
+
+        return view('det_vestimenta_show', compact('tallas','detalleVestimentas','detalleCarritos'));
     }
 }

@@ -79,7 +79,7 @@ class VestimentaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    /* public function show(string $id)
     {
         $vestimenta = Vestimenta::find($id);
         $tallas = Talla::all();
@@ -93,7 +93,7 @@ class VestimentaController extends Controller
         }
 
         return view('vestimenta_show', compact('vestimenta', 'tallas','detalleVestimentas','detalleCarritos'));
-    }
+    } */
 
     /**
      * Show the form for editing the specified resource.

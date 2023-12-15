@@ -13,7 +13,7 @@ class DetalleCarrito extends Model
     protected $fillable = [
         'detalle_vestimenta_id',
         'user_id',        
-        'cantidad',
+        'cantidad_compras',
     ];
 
     public function detalleVestimenta(): BelongsTo

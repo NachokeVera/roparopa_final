@@ -5,20 +5,19 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <img src="{{ Storage::url($vestimenta->imagen) }}" class="card-img-top mx-auto d-block" style="max-width: 100%; height: auto;">
+                    <img src="{{ Storage::url($detalleVestimentas[0]->vestimenta->imagen) }}" class="card-img-top mx-auto d-block" style="max-width: 100%; height: auto;">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $vestimenta->nombre }}</h5>
-                        <p class="card-text">{{ $vestimenta->descripcion }}</p>
-                        <p class="card-text"><strong>Precio: ${{ $vestimenta->precio }}</strong></p>
+                        <h5 class="card-title">{{ $detalleVestimentas[0]->vestimenta->nombre }}</h5>
+                        <p class="card-text">{{ $detalleVestimentas[0]->vestimenta->descripcion }}</p>
+                        <p class="card-text"><strong>Precio: ${{ $detalleVestimentas[0]->vestimenta->precio }}</strong></p>
 
                         <form method="POST" action="{{ route('detalle_carritos.store') }}">
                             @csrf
-                            <input type="hidden" name="idVestimenta" value="{{ $vestimenta->id }}">
-                            <input type="text">
+                            <input type="hidden" value="{{ $detalleVestimentas[0]->vestimenta_id }}" name="vestimenta_id">
                             <div class="form-group">
                                 <label for="talla">Talla:</label>
                                 <select class="form-select" aria-label="Default select example" name="talla">

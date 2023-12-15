@@ -49,8 +49,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function carritos(): HasMany
+    public function detalleCarritos(): HasMany
     {
-        return $this->hasMany(Carrito::class);
+        return $this->hasMany(DetalleCarrito::class);
     }
 }

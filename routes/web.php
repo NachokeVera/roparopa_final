@@ -51,7 +51,6 @@ Route::post('/vestimentas',[VestimentaController::class,'store'])->name('vestime
 Route::get('/vestimentas/{id}/edit',[VestimentaController::class,'edit'])->name('vestimentas.edit');
 Route::delete('/vestimentas/{id}',[VestimentaController::class,'destroy'])->name('vestimentas.destroy');
 Route::put('/vestimentas/{id}',[VestimentaController::class,'update'])->name('vestimentas.update');
-Route::get('/vestimentas/{id}',[VestimentaController::class,'show'])->name('vestimentas.show'); //Por terminar
 //->middleware(['middleware_name'])->only(['create', 'edit']);
 
 
@@ -60,10 +59,12 @@ Route::get('/admin/vestimentas', [VestimentaController::class, 'mostrarLista'])-
 Route::get('/admin/vestimentas/{id}', [VestimentaController::class, 'mostrarEditar'])->name('admin.edit.vestimenta');
 //Route::get('/admin/talla/{id}', [VestimentaController::class, 'talla'])->name('admin.talla.vestimenta');
 
-Route::get('/detalles-vestimenta/talla/{id}',[DetalleVestimentaController::class, 'show'])->name('detalles_vestimentas.show');
+Route::get('/detalles-vestimenta/talla/{id}',[DetalleVestimentaController::class, 'edit'])->name('detalles_vestimentas.edit');
 Route::put('/detalles-vestimenta/{id}',[DetalleVestimentaController::class, 'update'])->name('detalles_vestimentas.update');
+Route::get('/detalles-vestimenta/{id}',[DetalleVestimentaController::class,'show'])->name('detalles_vestimentas.show');
 
 Route::post('/detalle-carritos',[DetalleCarritoController::class,'store'])->name('detalle_carritos.store');
+Route::get('/detalle-carritos',[DetalleCarritoController::class,'index'])->name('detalle_carritos.index');
 
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');
 

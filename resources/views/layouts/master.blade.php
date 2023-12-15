@@ -66,23 +66,37 @@
           @auth
           <div class="dropdown">
             
-            <button class="btn btn-primary dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               <span class="material-symbols-outlined">
                 shopping_cart
               </span>
               Carrito de compras
             </button>
-            <ul class="dropdown-menu">
-              @if ($detalleCarritos != null)
-                <ul class="list-group">
-                    @foreach ($detalleCarritos as $detalleCarrito)
-                        <li class="list-group-item">{{ $detalleCarrito->id }}.- {{ $detalleCarrito->vestimenta->nombre }}: {{ $detalleCarrito->cantidad }}</li>
-                    @endforeach
-                </ul>
-            @else
-                <li><a class="dropdown-item" href="#">No hay elementos en el carrito</a></li>
-            @endif
-            </ul>
+           
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Carrito de compras</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      @if ($detalleCarritos != null)
+                        @foreach ($detalleCarritos as $detalleCarrito)
+                          <li class="list-group-item">Talla: {{ $detalleCarrito->detalleVestimenta->talla->talla }} {{ $detalleCarrito->detalleVestimenta->vestimenta->nombre }}: {{ $detalleCarrito->cantidad_compras }}</li>
+                        @endforeach
+                      @else
+                        <h6>No hay elementos en el carrito</h6>
+                      @endif
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerra</button>
+                      <a class="btn btn-primary" href="{{ route('detalle_carritos.index') }}">Comprar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
           </div>
           @endauth
         </div>
