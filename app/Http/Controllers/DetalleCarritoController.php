@@ -12,8 +12,7 @@ class DetalleCarritoController extends Controller
     public function index()
     {
         $detalleCarritos = null;
-        $total = 0;
-
+      
         if (Auth::check()) {
         // Obtener información adicional para usuarios autenticados
             $detalleCarritos = Auth::user()->detalleCarritos;

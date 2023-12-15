@@ -43,8 +43,16 @@ class VestimentaController extends Controller
      */
     public function create()
     {
+        $detalleCarritos = null;
+      
+        if (Auth::check()) {
+        // Obtener información adicional para usuarios autenticados
+            $detalleCarritos = Auth::user()->detalleCarritos;
+            
+        }
+
         $categorias = Categoria::all();
-        return view('admin.form-vestimenta',compact('categorias'));
+        return view('admin.form-vestimenta',compact('categorias', 'detalleCarritos'));
     }
 
     /**
