@@ -65,6 +65,8 @@ Route::get('/detalles-vestimenta/{id}',[DetalleVestimentaController::class,'show
 
 Route::post('/detalle-carritos',[DetalleCarritoController::class,'store'])->name('detalle_carritos.store');
 Route::get('/detalle-carritos',[DetalleCarritoController::class,'index'])->name('detalle_carritos.index');
+Route::delete('/detalle-carritos/{id}',[DetalleCarritoController::class,'destroy'])->name('detalle_carritos.destroy');
+
 
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');
 

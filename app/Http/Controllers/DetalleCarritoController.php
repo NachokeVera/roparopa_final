@@ -35,4 +35,10 @@ class DetalleCarritoController extends Controller
 
         return redirect()->route('inicio');
     }
+    public function destroy(string $id)
+    {
+        $det_carrito = DetalleCarrito::find($id);
+        $det_carrito->delete();
+        return redirect()->route('inicio');
+    }
 }

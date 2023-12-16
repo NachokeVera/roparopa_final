@@ -8,12 +8,7 @@
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<style>
-  .dropdown-menu{
-    max-height: 200px;
-    overflow-y: scroll;
-}
-</style>
+
 
 <body class="bg-light"> 
     <!-- Navbar -->
@@ -81,13 +76,39 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      @if ($detalleCarritos != null)
-                        @foreach ($detalleCarritos as $detalleCarrito)
-                          <li class="list-group-item">Talla: {{ $detalleCarrito->detalleVestimenta->talla->talla }} {{ $detalleCarrito->detalleVestimenta->vestimenta->nombre }}: {{ $detalleCarrito->cantidad_compras }}</li>
-                        @endforeach
-                      @else
-                        <h6>No hay elementos en el carrito</h6>
-                      @endif
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Talla</th>
+                            <th scope="col">Vestimenta</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Precio unitario</th>
+                            <th scope="col">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if ($detalleCarritos != null)
+                            @foreach ($detalleCarritos as $detalleCarrito)
+                              <tr>
+                                <td>{{ $detalleCarrito->detalleVestimenta->talla->talla }}</td>
+                                <td>{{ $detalleCarrito->detalleVestimenta->vestimenta->nombre }}</td>
+                                <td>{{ $detalleCarrito->cantidad_compras }}</td>
+                                <td>${{ number_format($detalleCarrito->detalleVestimenta->vestimenta->precio, 0, ',', '.') }}</td>
+                                <td>
+                                  <form action="{{ route('detalle_carritos.destroy', $detalleCarrito->id) }}" method="POST" style="display: inline;"> 
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta vestimenta?')">Eliminar</button>
+                                  </form>
+                                </td>
+                              </tr>
+                            @endforeach
+                          @else
+                            <h6>No hay elementos en el carrito</h6>
+                          @endif
+                          
+                        </tbody>
+                      </table>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerra</button>

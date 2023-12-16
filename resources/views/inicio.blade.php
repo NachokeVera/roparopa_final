@@ -24,7 +24,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">{{ $vestimenta->nombre }}</h5>
                         <p class="card-text">{{ $vestimenta->descripcion }}</p>
-                        <p class="card-text"><strong>Precio: ${{ $vestimenta->precio }}</strong></p>
+                        <p class="card-text"><strong>Precio: ${{ number_format($vestimenta->precio, 0, ',', '.') }}</strong></p>
                     </div>
                     <a href="{{ route('detalles_vestimentas.show',['id' => $vestimenta->id]) }}" class="btn btn-success">Elejir Tallaje</a>
                 </div>

@@ -4,38 +4,91 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Detalle de los artículos en el carrito -->
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Detalle del Carrito</h5>
-                    <ul class="list-group">
+        <div class="col-md-9">
+            <div class="card p-3">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Talla</th>
+                        <th scope="col">Vestimenta</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio unitario</th>
+                        <th scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @if ($detalleCarritos != null)
                         @foreach ($detalleCarritos as $detalleCarrito)
-                            <li class="list-group-item">
-                                {{ $detalleCarrito->detalleVestimenta->vestimenta->nombre }} - Talla: {{ $detalleCarrito->detalleVestimenta->talla->talla }}
-                            </li>
+                          <tr>
+                            <td>{{ $detalleCarrito->detalleVestimenta->talla->talla }}</td>
+                            <td>{{ $detalleCarrito->detalleVestimenta->vestimenta->nombre }}</td>
+                            <td>{{ $detalleCarrito->cantidad_compras }}</td>
+                            <td>${{ number_format($detalleCarrito->detalleVestimenta->vestimenta->precio, 0, ',', '.') }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#ModalImg{{ $detalleCarrito->id }}">
+                                    Ver
+                                </button>
+                                <form action="{{ route('detalle_carritos.destroy', $detalleCarrito->id) }}" method="POST" style="display: inline;"> 
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta vestimenta?')">Eliminar</button>
+                                </form>
+                            </td>
+                          </tr>
+                          <div class="modal fade" id="ModalImg{{ $detalleCarrito->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Vestimenta: {{ $detalleCarrito->detalleVestimenta->vestimenta->nombre }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="{{ Storage::url($detalleCarrito->detalleVestimenta->vestimenta->imagen) }}" alt="Imagen de la vestimenta" class="img-fluid">
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         @endforeach
-                    </ul>
-                </div>
+                      @else
+                        <h6>No hay elementos en el carrito</h6>
+                      @endif
+                      
+                    </tbody>
+                  </table>
             </div>
         </div>
 
         <!-- Resumen de precios y botón para comprar -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Resumen de Precios</h5>
-                    <ul class="list-group">
+        <div class="col-md-3">
+            <div class="card p-3">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Resumen de precios</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @if ($detalleCarritos != null)
                         @foreach ($detalleCarritos as $detalleCarrito)
-                            <li class="list-group-item">
-                                {{ $detalleCarrito->detalleVestimenta->vestimenta->nombre }} - Precio: ${{ $detalleCarrito->detalleVestimenta->vestimenta->precio }}
-                            </li>
-                        @endforeach
-                    </ul>
-                    <p class="card-text">Total: $</p>
-                    <div class="d-flex justify-content-end">
-                        <a href="#" class="btn btn-success">Comprar</a>
-                    </div>
-                </div>
+                          <tr>
+                            <td class="text-right">${{ number_format(($detalleCarrito->detalleVestimenta->vestimenta->precio * $detalleCarrito->cantidad_compras), 0, ',', '.') }}</td>
+                          </tr>
+                        @endforeach                      
+                      @endif                      
+                    </tbody>
+                </table>
+                <label for="pagoMet">Metodo de pago:</label>
+                <select id= "pagoMet"class="form-select" aria-label="Default select example">
+                    <option selected>Seleccione metodo de pago</option>
+                    <option value="1">Tarjeta Debito/Credito</option>
+                    <option value="2">Efectivo</option>
+                </select>
+                <hr>
+                <a href="" class="btn btn-success">Confirmar Compra</a>
             </div>
         </div>
     </div>
