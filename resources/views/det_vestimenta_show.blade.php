@@ -35,7 +35,12 @@
                             <p id="stock-disponible">stock disponible: 15</p>
 
                             <div class="d-flex justify-content-end">
+                                @auth
                                 <button type="submit" class="btn btn-success">Agregar al carrito</button>
+                                @endauth
+                                @guest
+                                <button type="submit" class="btn btn-success " disabled>Agregar al carrito</button>
+                                @endguest
                             </div>
                         </form>
                     </div>
