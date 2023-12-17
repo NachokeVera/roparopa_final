@@ -24,8 +24,7 @@ class VestimentaController extends Controller
     public function index()
     {
         $vestimentas = Vestimenta::all();
-        $tallas = Talla::all();
-        $categorias = Categoria::all();
+        
         $detalleCarritos = null;
 
         if (Auth::check()) {
@@ -35,7 +34,7 @@ class VestimentaController extends Controller
         }
 
         // Pasar la información a la vista
-        return view('inicio', compact('vestimentas', 'tallas', 'categorias', 'detalleCarritos'));
+        return view('inicio', compact('vestimentas', 'detalleCarritos'));
     }
 
     /**

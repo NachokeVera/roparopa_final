@@ -23,9 +23,10 @@
     </form> --}}
     <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb ">
         <ol class="breadcrumb d-flex justify-content-evenly">
-            <li class="breadcrumb-item active" aria-current="page">Todo</li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('inicio') }}">Todo</a></li>
             <li class="breadcrumb-item"><a href="{{ route('categorias.poleras') }}">Poleras</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('categorias.cortavientos') }}">Cortavientos</a></li>
+            <li class="breadcrumb-item">Cortavientos</li>
+          
         </ol>
     </nav>
     <div class="row">

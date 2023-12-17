@@ -74,8 +74,9 @@
                     <tbody>
                       @if ($detalleCarritos != null)
                         @foreach ($detalleCarritos as $detalleCarrito)
-                          <tr>
+                          <tr >
                             <td class="text-right">${{ number_format(($detalleCarrito->detalleVestimenta->vestimenta->precio * $detalleCarrito->cantidad_compras), 0, ',', '.') }}</td>
+                            <td><a href="" class="btn btn-sm" style="color: white" >a</a></td>
                           </tr>
                         @endforeach                      
                       @endif                      

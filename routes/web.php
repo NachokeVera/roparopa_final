@@ -6,7 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\VestimentaController;
 use App\Http\Controllers\DetalleVestimentaController;
 use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\CompraController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DetalleCarritoController;
 use App\Models\DetalleCarrito;
 
@@ -53,7 +53,8 @@ Route::delete('/vestimentas/{id}',[VestimentaController::class,'destroy'])->name
 Route::put('/vestimentas/{id}',[VestimentaController::class,'update'])->name('vestimentas.update');
 //->middleware(['middleware_name'])->only(['create', 'edit']);
 
-
+Route::get('/categorias/poleras',[CategoriaController::class,'poleras'])->name('categorias.poleras');
+Route::get('/categorias/cortavientos',[CategoriaController::class,'cortavientos'])->name('categorias.cortavientos');
 
 Route::get('/admin/vestimentas', [VestimentaController::class, 'mostrarLista'])->name('admin.show.vestimenta');
 Route::get('/admin/vestimentas/{id}', [VestimentaController::class, 'mostrarEditar'])->name('admin.edit.vestimenta');
