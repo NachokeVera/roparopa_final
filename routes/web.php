@@ -40,37 +40,34 @@ Route::get('/login', [LoginController::class, 'show'])->name('show.login');
 Route::post('/login', [LoginController::class, 'login'])->name('post.login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 //prueba
+Route::get('/acceso-denegado',function (){return view('acceso-denegado');})->name('acceso.denegado');
 Route::get('/test', [RegisterController::class, 'test'])->name('test.register');
 
 Route::get('/', function () {return redirect()->route('vestimentas.index');})->name('inicio');
 
 //vestimentas rutas
 Route::get('/vestimentas',[VestimentaController::class,'index'])->name('vestimentas.index');
-Route::get('/vestimentas/create',[VestimentaController::class,'create'])->name('vestimentas.create');
-Route::post('/vestimentas',[VestimentaController::class,'store'])->name('vestimentas.store');
-Route::get('/vestimentas/{id}/edit',[VestimentaController::class,'edit'])->name('vestimentas.edit');
-Route::delete('/vestimentas/{id}',[VestimentaController::class,'destroy'])->name('vestimentas.destroy');
-Route::put('/vestimentas/{id}',[VestimentaController::class,'update'])->name('vestimentas.update');
-//->middleware(['middleware_name'])->only(['create', 'edit']);
+Route::get('/vestimentas/create',[VestimentaController::class,'create'])->name('vestimentas.create')->middleware('checkadmin');
+Route::post('/vestimentas',[VestimentaController::class,'store'])->name('vestimentas.store')->middleware('checkadmin');
+Route::delete('/vestimentas/{id}',[VestimentaController::class,'destroy'])->name('vestimentas.destroy')->middleware('checkadmin');
+Route::put('/vestimentas/{id}',[VestimentaController::class,'update'])->name('vestimentas.update')->middleware('checkadmin');
+Route::get('/admin/vestimentas', [VestimentaController::class, 'mostrarLista'])->name('admin.show.vestimenta')->middleware('checkadmin');
+Route::get('/admin/vestimentas/{id}', [VestimentaController::class, 'mostrarEditar'])->name('admin.edit.vestimenta')->middleware('checkadmin');
 
 Route::get('/categorias/poleras',[CategoriaController::class,'poleras'])->name('categorias.poleras');
 Route::get('/categorias/cortavientos',[CategoriaController::class,'cortavientos'])->name('categorias.cortavientos');
 
-Route::get('/admin/vestimentas', [VestimentaController::class, 'mostrarLista'])->name('admin.show.vestimenta');
-Route::get('/admin/vestimentas/{id}', [VestimentaController::class, 'mostrarEditar'])->name('admin.edit.vestimenta');
 //Route::get('/admin/talla/{id}', [VestimentaController::class, 'talla'])->name('admin.talla.vestimenta');
 
-Route::get('/detalles-vestimenta/talla/{id}',[DetalleVestimentaController::class, 'edit'])->name('detalles_vestimentas.edit');
-Route::put('/detalles-vestimenta/{id}',[DetalleVestimentaController::class, 'update'])->name('detalles_vestimentas.update');
+Route::get('/detalles-vestimenta/talla/{id}',[DetalleVestimentaController::class, 'edit'])->name('detalles_vestimentas.edit')->middleware('checkadmin');
+Route::put('/detalles-vestimenta/{id}',[DetalleVestimentaController::class, 'update'])->name('detalles_vestimentas.update')->middleware('checkadmin');
 Route::get('/detalles-vestimenta/{id}',[DetalleVestimentaController::class,'show'])->name('detalles_vestimentas.show');
 
 Route::post('/detalle-carritos',[DetalleCarritoController::class,'store'])->name('detalle_carritos.store');
 Route::get('/detalle-carritos',[DetalleCarritoController::class,'index'])->name('detalle_carritos.index');
 Route::delete('/detalle-carritos/{id}',[DetalleCarritoController::class,'destroy'])->name('detalle_carritos.destroy');
 
-
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');
-
 
 Route::get('/compra-producto/{idProducto}', [ProductoController::class, 'mostrarCompraProducto'])->name('compra.producto');
 Route::post('/realizar-compra/{id}.pdf', [ProductoController::class, 'realizarCompra'])->name('compra.pdf');

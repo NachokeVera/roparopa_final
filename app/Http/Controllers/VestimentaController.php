@@ -83,37 +83,6 @@ class VestimentaController extends Controller
         return redirect()->route('inicio');//->with('success', 'vestimenta agregada exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    /* public function show(string $id)
-    {
-        $vestimenta = Vestimenta::find($id);
-        $tallas = Talla::all();
-        $detalleVestimentas = DetalleVestimenta::where('vestimenta_id',$id);
-        $detalleCarritos = null;
-
-        if (Auth::check()) {
-        // Obtener información adicional para usuarios autenticados
-            $detalleCarritos = Auth::user()->detalleCarritos;
-            
-        }
-
-        return view('vestimenta_show', compact('vestimenta', 'tallas','detalleVestimentas','detalleCarritos'));
-    } */
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(int $id)
-    {
-        $vestimenta = Vestimenta::find($id);
-        return view('admin.editar-vestimenta', compact('vestimenta'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(VestimentaRequest $request, string $id)
     {
         $vestimenta = vestimenta::find($id);

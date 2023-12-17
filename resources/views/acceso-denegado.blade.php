@@ -12,7 +12,7 @@
     <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div>
             <h1 class="text-center">No tienes permiso a esa ruta</h1>
-            <a href="#">Volver al inicio</a>
+            <a href="{{ route('inicio') }}">Volver al inicio</a>
         </div>
     </div>
 </body>

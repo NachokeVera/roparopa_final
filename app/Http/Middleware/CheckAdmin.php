@@ -24,6 +24,6 @@ class CheckAdmin
         }
 
         // Si no es un administrador, redirige a alguna página o muestra un error
-        return redirect('/acceso-denegado'); //->with('error', 'No tienes permiso para acceder a esta página.')
+        return redirect()->route('acceso.denegado'); //->with('error', 'No tienes permiso para acceder a esta página.')
     }
 }
