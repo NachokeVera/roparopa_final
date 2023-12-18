@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoletaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -7,38 +8,22 @@ use App\Http\Controllers\VestimentaController;
 use App\Http\Controllers\DetalleVestimentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ConfirmadoController;
 use App\Http\Controllers\DetalleCarritoController;
-use App\Models\DetalleCarrito;
+use App\Http\Controllers\UserController;
 
 // web.php
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
-
-//registro
 /* Route::get('/pdf', [ProductoController::class, 'pdf'])->name('.pdf'); */
 
+//registro
 Route::get('/register', [RegisterController::class, 'show'])->name('show.register');
 Route::post('/registro', [RegisterController::class, 'registrar'])->name('post.register');
 //login
 Route::get('/login', [LoginController::class, 'show'])->name('show.login');
 Route::post('/login', [LoginController::class, 'login'])->name('post.login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+//usuario
+Route::get('/usuario/{id}',[UserController::class, 'show'])->name('user.show');//->middleware('checkusuario');
 //prueba
 Route::get('/acceso-denegado',function (){return view('acceso-denegado');})->name('acceso.denegado');
 Route::get('/test', [RegisterController::class, 'test'])->name('test.register');
@@ -47,6 +32,7 @@ Route::get('/', function () {return redirect()->route('vestimentas.index');})->n
 
 //vestimentas rutas
 Route::get('/vestimentas',[VestimentaController::class,'index'])->name('vestimentas.index');
+Route::put('/vestimentas/stock/{id}',[VestimentaController::class,'stock'])->name('vestimenta.stock');
 Route::get('/vestimentas/create',[VestimentaController::class,'create'])->name('vestimentas.create')->middleware('checkadmin');
 Route::post('/vestimentas',[VestimentaController::class,'store'])->name('vestimentas.store')->middleware('checkadmin');
 Route::delete('/vestimentas/{id}',[VestimentaController::class,'destroy'])->name('vestimentas.destroy')->middleware('checkadmin');
@@ -66,6 +52,9 @@ Route::get('/detalles-vestimenta/{id}',[DetalleVestimentaController::class,'show
 Route::post('/detalle-carritos',[DetalleCarritoController::class,'store'])->name('detalle_carritos.store');
 Route::get('/detalle-carritos',[DetalleCarritoController::class,'index'])->name('detalle_carritos.index');
 Route::delete('/detalle-carritos/{id}',[DetalleCarritoController::class,'destroy'])->name('detalle_carritos.destroy');
+
+Route::post('/confirmados',[ConfirmadoController::class,'store'])->name('confirmados.store');
+Route::get('/boletas/{id}',[BoletaController::class,'show'])->name('boletas.show');
 
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');
 

@@ -12,14 +12,21 @@ class DetalleCarritoController extends Controller
     public function index()
     {
         $detalleCarritos = null;
-      
+        $total = 0;
+
         if (Auth::check()) {
-        // Obtener información adicional para usuarios autenticados
             $detalleCarritos = Auth::user()->detalleCarritos;
-            
         }
-        // Pasar la información a la vista
-        return view('detalle-carrito-compras', compact('detalleCarritos'));
+        foreach ($detalleCarritos as $detalleCarrito) {
+
+            $precioUnitario = $detalleCarrito->detalleVestimenta->vestimenta->precio;
+            $cantidad = $detalleCarrito->cantidad_compras;
+
+            // Sumar al total
+            $total += $precioUnitario * $cantidad;
+        }
+
+        return view('detalle-carrito-compras', compact('detalleCarritos','total'));
     }
     public function store(Request $request)
     {

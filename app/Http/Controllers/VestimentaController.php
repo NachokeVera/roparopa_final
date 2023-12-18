@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VestEditRequest;
 use App\Models\Vestimenta;
 use Illuminate\Http\Request;
 use App\Http\Requests\VestimentaRequest;
@@ -9,11 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Categoria;
 use App\Models\Talla;
 use App\Models\DetalleVestimenta;
-use App\Models\DetalleCarrito;
 use Illuminate\Support\Facades\Auth;
-use Database\Seeders\CategoriaSeeder;
-
-
 
 
 class VestimentaController extends Controller
@@ -83,7 +80,7 @@ class VestimentaController extends Controller
         return redirect()->route('inicio');//->with('success', 'vestimenta agregada exitosamente.');
     }
 
-    public function update(VestimentaRequest $request, string $id)
+    public function update(VestEditRequest $request, string $id)
     {
         $vestimenta = vestimenta::find($id);
 
@@ -95,6 +92,7 @@ class VestimentaController extends Controller
         $vestimenta->nombre = $request->nombre;
         $vestimenta->descripcion = $request->descripcion;
         $vestimenta->precio = $request->precio;
+        $vestimenta->categoria_id = $request->categoria;
 
         // Actualizar la imagen si se proporciona una nueva
         if ($request->hasFile('imagen')) {
@@ -137,6 +135,7 @@ class VestimentaController extends Controller
 
     public function mostrarEditar($id){
         $vestimentas = vestimenta::find($id);
+        $categorias = Categoria::all();
         $detalleCarritos = null;
 
         if (Auth::check()) {
@@ -144,7 +143,7 @@ class VestimentaController extends Controller
             $detalleCarritos = Auth::user()->detalleCarritos;
             
         }
-        return view('admin.editar-vestimenta', compact('vestimentas','detalleCarritos'));
+        return view('admin.editar-vestimenta', compact('vestimentas','detalleCarritos','categorias'));
     }
     // En tu controlador
     public function mostrarPrendas(Request $request)
@@ -160,10 +159,12 @@ class VestimentaController extends Controller
         if ($nombre_prenda) {
             $vestimentas = Vestimenta::where('nombre', $nombre_prenda)->get();
         }
-    
+        return view('inicio', compact('vestimentas', 'nombre_prenda','tallas'));
+    }
 
-    return view('inicio', compact('vestimentas', 'nombre_prenda','tallas'));
-}
-
+    public function stock($id)
+    {
+        $vestimentas = vestimenta::find($id);
+    }
 }
 

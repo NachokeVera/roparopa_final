@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Boleta extends Model
 {
+    protected $fillable = [
+        'fecha_venta',
+        'total_venta',
+    ];
+
     use HasFactory;
-    public function carritos(): HasMany
+    public function confirmado(): HasMany
     {
-        return $this->hasMany(Carrito::class);
+        return $this->hasMany(Confirmado::class);
     }
     //conexion FK
     

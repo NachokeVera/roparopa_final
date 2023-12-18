@@ -82,14 +82,20 @@
                       @endif                      
                     </tbody>
                 </table>
-                <label for="pagoMet">Metodo de pago:</label>
-                <select id= "pagoMet"class="form-select" aria-label="Default select example">
-                    <option selected>Seleccione metodo de pago</option>
-                    <option value="1">Tarjeta Debito/Credito</option>
-                    <option value="2">Efectivo</option>
-                </select>
-                <hr>
-                <a href="" class="btn btn-success">Confirmar Compra</a>
+                <form method="POST" action="{{ route('confirmados.store') }}">
+                  @csrf
+                  <label for="">Total a pagar: ${{ number_format(($total),0,',','.') }}</label>
+                  <input type="hidden" value="{{ $total }}" name="total">
+                  <div class="mb-4"></div>
+                  <label for="pagoMet" >Metodo de pago:</label>
+                  <select id= "pagoMet"class="form-select" aria-label="Default select example">
+                      <option selected>Seleccione metodo de pago</option>
+                      <option value="1">Tarjeta Debito/Credito</option>
+                      <option value="2">Efectivo</option>
+                  </select>
+                  <hr>
+                  <button type="submit" class="btn btn-success">Confirmar Compra</button>
+                </form>
             </div>
         </div>
     </div>

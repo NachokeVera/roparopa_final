@@ -33,16 +33,12 @@
                 {{ auth()->user()->nombre }}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('user.show',['id' => auth()->user()->id]) }}">Perfil</a>
                 @if (auth()->user() && (auth()->user()->perfil_id == 1))
                 <a class="dropdown-item" href="{{ route('vestimentas.create') }}">Agregar ropa</a>
                 <a class="dropdown-item" href="{{ route('admin.show.vestimenta') }}">Listar vestimentas</a>
-                
-                
-                  
-               
                 <a class="dropdown-item" href="{{route('logout')}}">Cerrar sesión</a>
                 @else
-                <a class="dropdown-item" href="#">Opcion 1</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('logout')}}">Cerrar sesión</a>
                 @endif

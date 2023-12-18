@@ -6,18 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Carrito extends Model
+class Confirmado extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'boleta_id',
+        'detalle_carrito_id',
+    ];
 
     public function boleta(): BelongsTo
     {
         return $this->belongsTo(Boleta::class);
     }
-    public function Carrito(): BelongsTo
+    public function detalleCarrito(): BelongsTo
     {
-        return $this->belongsTo(Carrito::class,'talla_id');
+        return $this->belongsTo(DetalleCarrito::class,'talla_id');
     }
 
 }

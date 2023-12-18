@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('boletas', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_venta');
+            $table->datetime('fecha_venta');
             $table->integer('total_venta');
             $table->timestamps();
         });
