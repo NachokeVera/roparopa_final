@@ -10,7 +10,6 @@
             <th>Foto</th>
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>Cantidad</th>
             <th>Precio</th>
             <th>Categoria</th>
             <th>Opciones</th>
@@ -26,7 +25,6 @@
                 </td>
                 <td>{{ $vestimenta->nombre }}</td>
                 <td>{{ $vestimenta->descripcion }}</td>
-                <td>{{ $vestimenta->cantidad }}</td>
                 <td>{{ $vestimenta->precio }}</td>
                 <td>{{ $vestimenta->categoria->nombre }}</td>
                 <td>

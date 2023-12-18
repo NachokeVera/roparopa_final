@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BoletaController extends Controller
 {
-    public function show($id)
+    public function show()
     {
         $detalleCarritos = null;
 

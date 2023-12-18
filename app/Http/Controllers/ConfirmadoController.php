@@ -31,7 +31,7 @@ class ConfirmadoController extends Controller
             ]);
         }
 
-        return redirect()->route('vestimentas.stock');
+        return redirect()->route('detalles_vestimentas.stock',['id' => $boleta->id]);
     }
     
 

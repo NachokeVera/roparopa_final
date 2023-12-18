@@ -162,9 +162,5 @@ class VestimentaController extends Controller
         return view('inicio', compact('vestimentas', 'nombre_prenda','tallas'));
     }
 
-    public function stock($id)
-    {
-        $vestimentas = vestimenta::find($id);
-    }
 }
 

@@ -32,7 +32,7 @@ Route::get('/', function () {return redirect()->route('vestimentas.index');})->n
 
 //vestimentas rutas
 Route::get('/vestimentas',[VestimentaController::class,'index'])->name('vestimentas.index');
-Route::put('/vestimentas/stock/{id}',[VestimentaController::class,'stock'])->name('vestimenta.stock');
+
 Route::get('/vestimentas/create',[VestimentaController::class,'create'])->name('vestimentas.create')->middleware('checkadmin');
 Route::post('/vestimentas',[VestimentaController::class,'store'])->name('vestimentas.store')->middleware('checkadmin');
 Route::delete('/vestimentas/{id}',[VestimentaController::class,'destroy'])->name('vestimentas.destroy')->middleware('checkadmin');
@@ -48,13 +48,15 @@ Route::get('/categorias/cortavientos',[CategoriaController::class,'cortavientos'
 Route::get('/detalles-vestimenta/talla/{id}',[DetalleVestimentaController::class, 'edit'])->name('detalles_vestimentas.edit')->middleware('checkadmin');
 Route::put('/detalles-vestimenta/{id}',[DetalleVestimentaController::class, 'update'])->name('detalles_vestimentas.update')->middleware('checkadmin');
 Route::get('/detalles-vestimenta/{id}',[DetalleVestimentaController::class,'show'])->name('detalles_vestimentas.show');
+Route::match(['get', 'put'],'/detalles-vestimenta/stock/{id}',[DetalleVestimentaController::class,'stock'])->name('detalles_vestimentas.stock');
+
 
 Route::post('/detalle-carritos',[DetalleCarritoController::class,'store'])->name('detalle_carritos.store');
 Route::get('/detalle-carritos',[DetalleCarritoController::class,'index'])->name('detalle_carritos.index');
 Route::delete('/detalle-carritos/{id}',[DetalleCarritoController::class,'destroy'])->name('detalle_carritos.destroy');
 
 Route::post('/confirmados',[ConfirmadoController::class,'store'])->name('confirmados.store');
-Route::get('/boletas/{id}',[BoletaController::class,'show'])->name('boletas.show');
+Route::get('/boletas',[BoletaController::class,'show'])->name('boletas.show');
 
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');
 

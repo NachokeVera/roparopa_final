@@ -17,6 +17,7 @@ class DetalleCarritoController extends Controller
         if (Auth::check()) {
             $detalleCarritos = Auth::user()->detalleCarritos;
         }
+        
         foreach ($detalleCarritos as $detalleCarrito) {
 
             $precioUnitario = $detalleCarrito->detalleVestimenta->vestimenta->precio;

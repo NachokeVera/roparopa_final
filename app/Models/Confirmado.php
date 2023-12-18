@@ -21,7 +21,7 @@ class Confirmado extends Model
     }
     public function detalleCarrito(): BelongsTo
     {
-        return $this->belongsTo(DetalleCarrito::class,'talla_id');
+        return $this->belongsTo(DetalleCarrito::class);
     }
 
 }

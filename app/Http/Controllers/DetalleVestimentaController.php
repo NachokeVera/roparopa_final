@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Confirmado;
 use Illuminate\Http\Request;
 use App\Public\imagenes\File;
 use Illuminate\Support\Facades\Storage;
@@ -37,7 +38,7 @@ class DetalleVestimentaController extends Controller
 
         $detalleVestimenta->save();
 
-        return redirect()->route('detalles_vestimentas.show',$id);
+        return redirect()->route('detalles_vestimentas.edit',$id);
     }
 
     public function show(string $id)
@@ -53,5 +54,18 @@ class DetalleVestimentaController extends Controller
         }
 
         return view('det_vestimenta_show', compact('tallas','detalleVestimentas','detalleCarritos'));
+    }
+
+    public function stock($id)
+    {
+        $confirmados = Confirmado::where('boleta_id',$id)->get();
+        
+        foreach ($confirmados as $confirmado) {
+            $detalleVestimenta = DetalleVestimenta::find($confirmado->detalleCarrito->detalle_vestimenta_id);
+            $detalleVestimenta->cantidad -= $confirmado->detalleCarrito->cantidad_compras;
+            $detalleVestimenta->save();
+        }
+        
+        return redirect()->route('boletas.show');
     }
 }
