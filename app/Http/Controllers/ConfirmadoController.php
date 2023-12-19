@@ -6,6 +6,7 @@ use App\Models\Boleta;
 use App\Models\Confirmado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DetalleCarrito;
 
 class ConfirmadoController extends Controller
 {
@@ -19,8 +20,10 @@ class ConfirmadoController extends Controller
         $detalleCarritos = null;
 
         if (Auth::check()) {
-        // Obtener información adicional para usuarios autenticados
-            $detalleCarritos = Auth::user()->detalleCarritos;
+            $userID = Auth::user()->id;
+
+            $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
+            {$query->where('user_id', $userID);})->get();
             
         }
 
@@ -31,7 +34,7 @@ class ConfirmadoController extends Controller
             ]);
         }
 
-        return redirect()->route('detalles_vestimentas.stock',['id' => $boleta->id]);
+        return redirect()->route('detalles_vestimentas.stock',['id' => $boleta->id]);//->method('put');
     }
     
 

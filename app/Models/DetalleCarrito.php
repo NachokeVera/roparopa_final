@@ -25,7 +25,7 @@ class DetalleCarrito extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function confirmado(): HasMany
+    public function confirmados(): HasMany
     {
         return $this->hasMany(Confirmado::class);
     }

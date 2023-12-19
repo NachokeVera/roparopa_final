@@ -15,7 +15,7 @@ class Boleta extends Model
     ];
 
     use HasFactory;
-    public function confirmado(): HasMany
+    public function confirmados(): HasMany
     {
         return $this->hasMany(Confirmado::class);
     }

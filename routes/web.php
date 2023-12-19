@@ -56,7 +56,12 @@ Route::get('/detalle-carritos',[DetalleCarritoController::class,'index'])->name(
 Route::delete('/detalle-carritos/{id}',[DetalleCarritoController::class,'destroy'])->name('detalle_carritos.destroy');
 
 Route::post('/confirmados',[ConfirmadoController::class,'store'])->name('confirmados.store');
-Route::get('/boletas',[BoletaController::class,'show'])->name('boletas.show');
+Route::get('/boletas/confirmado',[BoletaController::class,'confirmada'])->name('boletas.confirmada');
+Route::get('/boletas',[BoletaController::class,'index'])->name('boletas.index')->middleware('checkadmin');
+Route::get('/boleta/{id}', [BoletaController::class, 'show'])->name('boletas.show');
+
+
+
 
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');
 

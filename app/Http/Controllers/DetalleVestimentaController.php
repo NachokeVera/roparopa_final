@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\DetalleVestimenta;
 use App\Models\Talla;
 use App\Models\Vestimenta;
-use Database\Seeders\CategoriaSeeder;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DetalleCarrito;
 
 class DetalleVestimentaController extends Controller
 {
@@ -21,8 +21,10 @@ class DetalleVestimentaController extends Controller
         $detalleCarritos = null;
 
         if (Auth::check()) {
-        // Obtener información adicional para usuarios autenticados
-            $detalleCarritos = Auth::user()->detalleCarritos;
+            $userID = Auth::user()->id;
+
+            $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
+            {$query->where('user_id', $userID);})->get();
             
         }
 
@@ -48,8 +50,10 @@ class DetalleVestimentaController extends Controller
         $detalleCarritos = null;
 
         if (Auth::check()) {
-        // Obtener información adicional para usuarios autenticados
-            $detalleCarritos = Auth::user()->detalleCarritos;
+            $userID = Auth::user()->id;
+
+            $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
+            {$query->where('user_id', $userID);})->get();
             
         }
 
@@ -66,6 +70,6 @@ class DetalleVestimentaController extends Controller
             $detalleVestimenta->save();
         }
         
-        return redirect()->route('boletas.show');
+        return redirect()->route('boletas.confirmada');
     }
 }

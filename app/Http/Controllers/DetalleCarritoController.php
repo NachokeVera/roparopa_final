@@ -15,7 +15,11 @@ class DetalleCarritoController extends Controller
         $total = 0;
 
         if (Auth::check()) {
-            $detalleCarritos = Auth::user()->detalleCarritos;
+            $userID = Auth::user()->id;
+
+            $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
+            {$query->where('user_id', $userID);})->get();
+            
         }
         
         foreach ($detalleCarritos as $detalleCarrito) {

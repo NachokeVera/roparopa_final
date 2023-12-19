@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\DetalleCarrito;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,10 @@ class UserController extends Controller
         $detalleCarritos = null;
 
         if (Auth::check()) {
-        // Obtener información adicional para usuarios autenticados
-            $detalleCarritos = Auth::user()->detalleCarritos;
+            $userID = Auth::user()->id;
+
+            $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
+            {$query->where('user_id', $userID);})->get();
             
         }
 
