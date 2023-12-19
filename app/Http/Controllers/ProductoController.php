@@ -26,10 +26,6 @@ public function mostrarCompraProducto(int $id, Request $request)
 }
 
 
-
-
-
-
 public function realizarCompra(Request $request, int $id)
 {   $request->session()->put('datosCompra', $request->except('_token'));
     $vestimenta = Vestimenta::find($id);

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('detalle_carrito_id');
             $table->unsignedBigInteger('boleta_id');
             //foreing key
-            $table->foreign('detalle_carrito_id')->references('id')->on('detalle_carritos');
-            $table->foreign('boleta_id')->references('id')->on('boletas');
+            $table->foreign('detalle_carrito_id')->references('id')->on('detalle_carritos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('boleta_id')->references('id')->on('boletas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

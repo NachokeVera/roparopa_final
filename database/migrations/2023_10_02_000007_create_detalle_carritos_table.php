@@ -19,8 +19,8 @@ return new class extends Migration
             //atributos
             $table->mediumInteger('cantidad_compras');
             //foreing key
-            $table->foreign('detalle_vestimenta_id')->references('id')->on('detalle_vestimentas');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('detalle_vestimenta_id')->references('id')->on('detalle_vestimentas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

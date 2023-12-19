@@ -70,6 +70,6 @@ class DetalleVestimentaController extends Controller
             $detalleVestimenta->save();
         }
         
-        return redirect()->route('boletas.confirmada');
+        return redirect()->route('boletas.confirmada',$id);
     }
 }

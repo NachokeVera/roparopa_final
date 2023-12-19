@@ -6,6 +6,7 @@ use App\Models\Boleta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetalleCarrito;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BoletaController extends Controller
 {
@@ -22,8 +23,9 @@ class BoletaController extends Controller
         return view('boleta.boleta_index', compact('detalleCarritos','boletas'));
     }
 
-    public function confirmada()
+    public function confirmada($id)
     {
+        $boletaId = $id;
         $detalleCarritos = null;
         if (Auth::check()) {
             $userID = Auth::user()->id;
@@ -32,7 +34,7 @@ class BoletaController extends Controller
         }
 
         // Pasar la información a la vista
-        return view('boleta.boleta_confirmada', compact('detalleCarritos'));
+        return view('boleta.boleta_confirmada', compact('detalleCarritos','boletaId'));
     }
     
     public function indexUser()
@@ -42,6 +44,22 @@ class BoletaController extends Controller
 
     public function show($id)
     {
+
+    }
+    public function pdf($id)
+    {
+        
+        $boleta=Boleta::find($id);
+        $usuario = $boleta->confirmados->first()->detalleCarrito->user;
+        
+        $data = [
+            'boleta' => $boleta,
+            'usuario'=>$usuario, 
+        ];
+        // Generar el PDF
+        $pdf = PDF::loadView('boleta.boleta_pdf', $data);
+        return $pdf->download('boleta.pdf');
+    
 
     }
 }
