@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetalleCarrito;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\User;
 
 class BoletaController extends Controller
 {
@@ -37,9 +38,21 @@ class BoletaController extends Controller
         return view('boleta.boleta_confirmada', compact('detalleCarritos','boletaId'));
     }
     
-    public function indexUser()
+    public function usuario($id)
     {
-        
+        $usuario = User::findOrFail($id);
+        $boletas = Boleta::whereHas('confirmados.detalleCarrito', function ($query) use ($usuario) {
+            $query->where('user_id', $usuario->id);
+        })
+        ->get();
+
+        $detalleCarritos = null;
+        if (Auth::check()) {
+            $userID = Auth::user()->id;
+            $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
+            {$query->where('user_id', $userID);})->get();
+        }
+        return view('boleta.boleta_index_user', compact('detalleCarritos','boletas'));
     }
 
     public function show($id)

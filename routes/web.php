@@ -58,9 +58,8 @@ Route::delete('/detalle-carritos/{id}',[DetalleCarritoController::class,'destroy
 Route::post('/confirmados',[ConfirmadoController::class,'store'])->name('confirmados.store');
 Route::get('/boletas/confirmado/{id}',[BoletaController::class,'confirmada'])->name('boletas.confirmada');
 Route::get('/boletas',[BoletaController::class,'index'])->name('boletas.index')->middleware('checkadmin');
-Route::get('/boleta/{id}', [BoletaController::class, 'show'])->name('boletas.show');
 Route::get('/boleta/{id}/descargarpdf', [BoletaController::class, 'pdf'])->name('boletas.pdf');
-
+Route::get('/boleta/{id}/usuario', [BoletaController::class, 'usuario'])->name('boletas.usuario');
 
 
 Route::get('/mostrar-prendas', [VestimentaController::class, 'mostrarPrendas'])->name('filtrar-prenda');

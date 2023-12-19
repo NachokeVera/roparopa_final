@@ -38,11 +38,11 @@
                 <a class="dropdown-item" href="{{ route('vestimentas.create') }}">Agregar ropa</a>
                 <a class="dropdown-item" href="{{ route('admin.show.vestimenta') }}">Listar vestimentas</a>
                 <a class="dropdown-item" href="{{ route('boletas.index') }}">Ventas</a>
-                <a class="dropdown-item" href="{{route('logout')}}">Cerrar sesión</a>
                 @else
+                <a class="dropdown-item" href="{{ route('boletas.usuario',['id' => auth()->user()->id]) }}">Historial de compra</a>
+                @endif
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('logout')}}">Cerrar sesión</a>
-                @endif
               </div>
             </li>
             @endauth
