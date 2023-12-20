@@ -32,8 +32,9 @@
                                 <label for="cantidad">Cantidad:</label>
                                 <input type="number" class="form-control" id="cantidad" name="cantidad" step="1" required>
                             </div>
-                            <p id="stock-disponible">stock disponible: 15</p>
-
+                            @foreach ($detalleVestimentas as $detalleVestimenta)
+                                <p>Cantidad Maxima Talla {{ $detalleVestimenta->talla->talla }}: {{ $detalleVestimenta->cantidad }}</p>
+                            @endforeach
                             <div class="d-flex justify-content-end">
                                 @auth
                                 <button type="submit" class="btn btn-success">Agregar al carrito</button>
