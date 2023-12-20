@@ -17,9 +17,12 @@
         </thead>
         <tbody>
             @foreach ($boletas as $boleta)
+                @php
+                $cliente = $clientes[$boleta->id];
+                @endphp
                 <tr>
                     <td>{{ $boleta->id }}</td>
-                    <td>{{ $boleta->confirmados->first()->detalleCarrito->user->rut }}</td>
+                    <td>{{ $cliente['rut'] }}</td>
                     <td>{{ $boleta->fecha_venta }}</td>
                     <td>${{ number_format($boleta->total_venta, 0, ',', '.') }}</td>
                     <td>
@@ -32,40 +35,34 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detalle Venta cliente: {{ $boleta->confirmados->first()->detalleCarrito->user->rut }}</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detalle Venta cliente: {{ $cliente['nombre'] }}</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">       
                                 <!-- Información del Usuario -->
-                                @php
-                                    $usuario = $boleta->confirmados->first()->detalleCarrito->user;
-                                @endphp
+                                
                                 <div class="mb-3">
                                     <p>Fecha de Compra: {{ $boleta->fecha_venta }}</p>
-                                    <p>cliente: {{ $usuario->nombre }} {{ $usuario->apellido}}</p>
-                                    <p>Correo Electrónico:{{ $usuario->correo }}</p>
-                                    <p>Dirección: {{ $usuario->direccion }}</p>
-                                    <p>Número de Teléfono: {{ $usuario->telefono }}</p>
+                                    <p>cliente: {{ $cliente['nombre'] }} {{ $cliente['apellido']}}</p>
+                                    <p>Correo Electrónico:{{ $cliente['correo'] }}</p>
+                                    <p>Dirección: {{ $cliente['direccion'] }}</p>
+                                    <p>Número de Teléfono: {{ $cliente['telefono'] }}</p>
                                 </div>
                             
                                 
                                 <!-- Detalles de la Compra -->
                                 <ul class="list-group">
-                                    @foreach ($boleta->confirmados as $confirmado)
-                                    @php
-                                        $detalleCarrito = $confirmado->detalleCarrito;
-                                        $detalleVestimenta = $detalleCarrito->detalleVestimenta;
-                                    @endphp
+                                    @foreach ($detalleVestimentas[$boleta->id] as $detalleVestimenta)
                                     <li class="list-group-item">
-                                        Talla: {{ $detalleVestimenta->talla->talla }}
+                                        Talla: {{ $detalleVestimenta['talla'] }}
                                         <div></div>
-                                        Vestimenta: {{ $detalleVestimenta->vestimenta->nombre }}
+                                        Vestimenta: {{ $detalleVestimenta['nombre'] }}
                                         <div></div>
-                                        Precio: ${{ number_format($detalleVestimenta->vestimenta->precio, 0, ',', '.') }}
+                                        Precio: ${{ number_format($detalleVestimenta['precio'], 0, ',', '.') }}
                                         <div></div>
-                                        Cantidad: {{ $detalleCarrito->cantidad_compras }}
+                                        Cantidad: {{ $detalleVestimenta['cantidad'] }}
                                         <div></div>
-                                        Subtotal: ${{ number_format($detalleCarrito->cantidad_compras * $detalleVestimenta->vestimenta->precio,0, ',', '.') }}
+                                        Subtotal: ${{ number_format($detalleVestimenta['subtotal'], 0, ',', '.') }}
                                     </li>
                                     @endforeach
                                 </ul>

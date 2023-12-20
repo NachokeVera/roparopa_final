@@ -21,7 +21,20 @@ class BoletaController extends Controller
             $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
             {$query->where('user_id', $userID);})->get();
         }
-        return view('boleta.boleta_index', compact('detalleCarritos','boletas'));
+
+        $clientes = [];
+        $detalleVestimentas = [];
+
+        foreach ($boletas as $boleta) {
+            $cliente = json_decode($boleta->cliente_snapshot, true);
+            $clientes[$boleta->id] = $cliente;
+
+            $detalleVestimenta = json_decode($boleta->detalle_vestimentas_snapshot, true);
+            $detalleVestimentas[$boleta->id] = $detalleVestimenta;
+        }
+
+
+        return view('boleta.boleta_index', compact('detalleCarritos', 'boletas', 'clientes', 'detalleVestimentas'));
     }
 
     public function confirmada($id)
@@ -52,7 +65,15 @@ class BoletaController extends Controller
             $detalleCarritos = DetalleCarrito::where('user_id', $userID)->whereDoesntHave('confirmados', function ($query) use ($userID) 
             {$query->where('user_id', $userID);})->get();
         }
-        return view('boleta.boleta_index_user', compact('detalleCarritos','boletas'));
+
+        $detalleVestimentas = [];
+
+        foreach ($boletas as $boleta) {
+            $detalleVestimenta = json_decode($boleta->detalle_vestimentas_snapshot, true);
+            $detalleVestimentas[$boleta->id] = $detalleVestimenta;
+        }
+        
+        return view('boleta.boleta_index_user', compact('detalleCarritos','boletas','detalleVestimentas'));
     }
 
     public function show($id)

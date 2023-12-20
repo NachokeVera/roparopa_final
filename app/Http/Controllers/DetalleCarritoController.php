@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StockRequest;
 use App\Models\DetalleCarrito;
 use App\Models\DetalleVestimenta;
 use Illuminate\Http\Request;
@@ -34,7 +33,7 @@ class DetalleCarritoController extends Controller
 
         return view('detalle-carrito-compras', compact('detalleCarritos','total'));
     }
-    public function store(StockRequest $request)
+    public function store(Request $request)
     {
         
         $user = Auth::user()->id;

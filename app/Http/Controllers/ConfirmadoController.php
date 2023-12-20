@@ -12,12 +12,8 @@ class ConfirmadoController extends Controller
 {
     public function store(Request $request)
     {
-        $boleta = Boleta::create([
-            'fecha_venta' => now(),
-            'total_venta' => $request->total,
-        ]);
-
         $detalleCarritos = null;
+        $usuario = Auth::user();
 
         if (Auth::check()) {
             $userID = Auth::user()->id;
@@ -26,6 +22,39 @@ class ConfirmadoController extends Controller
             {$query->where('user_id', $userID);})->get();
             
         }
+         
+        $clienteSnapshot = json_encode([
+            'rut' => $usuario->rut,
+            'nombre' => $usuario->nombre,
+            'apellido'=> $usuario->apellido,
+            'correo'=> $usuario->correo,
+            'direccion'=> $usuario->direccion,
+            'telefono'=> $usuario->telefono
+        
+        ]);
+        
+        $detalleVestimentasSnapshot = [];
+
+        foreach ($detalleCarritos as $detalleCarrito) {
+            $detalleVestimenta = $detalleCarrito->detalleVestimenta;
+            $vestimenta = $detalleVestimenta->vestimenta;
+            $talla = $detalleVestimenta->talla;
+
+            $detalleVestimentasSnapshot[] = [
+                'talla' => $talla->talla,
+                'nombre' => $vestimenta->nombre,
+                'precio' => $vestimenta->precio,
+                'cantidad' => $detalleCarrito->cantidad_compras,
+                'subtotal' => $detalleCarrito->cantidad_compras * $vestimenta->precio,
+            ];
+        }
+
+        $boleta = Boleta::create([
+            'fecha_venta' => now(),
+            'total_venta' => $request->total,
+            'cliente_snapshot' => $clienteSnapshot,
+            'detalle_vestimentas_snapshot'=> json_encode($detalleVestimentasSnapshot)
+        ]);
 
         foreach ($detalleCarritos as $detalleCarrito) {
             Confirmado::create([

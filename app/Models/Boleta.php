@@ -12,6 +12,8 @@ class Boleta extends Model
     protected $fillable = [
         'fecha_venta',
         'total_venta',
+        'cliente_snapshot',
+        'detalle_vestimentas_snapshot',
     ];
 
     use HasFactory;

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->datetime('fecha_venta');
             $table->integer('total_venta');
+            $table->text('cliente_snapshot')->nullable();
+            $table->text('detalle_vestimentas_snapshot')->nullable();
             $table->timestamps();
         });
     }
